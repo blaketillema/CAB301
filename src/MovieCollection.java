@@ -1,33 +1,70 @@
-import com.sun.source.tree.BinaryTree;
-import com.sun.source.tree.ExpressionTree;
-import com.sun.source.tree.TreeVisitor;
-
 public class MovieCollection {
 
     private Movie root;
 
     public void addMovie(String title, String information, int copiesAvailable){
+        Movie mv = new Movie(title, information, copiesAvailable);
         if(root == null){
-            root = new Movie(title, information, copiesAvailable);
+            root = mv;
         }
-        Movie nodeLocation = root;
-        while(true){
-            if(title.compareTo(nodeLocation.title) < 0){ // compare left node if exists
-                if(nodeLocation.left != null) nodeLocation = nodeLocation.left;
-                else { nodeLocation.left = new Movie(title, information, copiesAvailable); }
-            }
-            else if(title.compareTo(nodeLocation.title) > 0){ // compare right node if exists
-                if(nodeLocation.right != null) nodeLocation = nodeLocation.right;
-                else { nodeLocation.right = new Movie(title, information, copiesAvailable); }
-            }
-            else break; // node has same name
+        else{
+            root = addMovieRecursion(root, mv);
         }
     }
-    public void inAlphabeticalOrder(){
+
+    private Movie addMovieRecursion(Movie root, Movie mv){
+        if(root == null){
+            return mv; // add movie
+        }
+        if(mv.title.compareTo(root.title) < 0){
+            root.left = addMovieRecursion(root.left, mv);
+        }
+        else if(mv.title.compareTo(root.title) > 0){
+            root.right = addMovieRecursion(root.right, mv);
+        }
+        return root;
+    }
+
+    public void removeMovie(String title){
+        root = removeMovieRecursion(root, title); // call the recursive function
+    }
+
+    private Movie removeMovieRecursion(Movie root, String title){
+        if(root == null){
+            return root; // empty tree
+        }
+        if(title.compareTo(root.title) < 0){
+            root.left = removeMovieRecursion(root.left, title); // look for the title down the left branch
+        }
+        else if(title.compareTo(root.title) > 0){
+            root.right = removeMovieRecursion(root.right, title); // look for the title down the right branch
+        }
+        else{ // if the title is found
+            if(root.left == null){
+                return root.right; // if the movie has no left child, replace it with the right child
+            }
+            else if(root.right == null){ // if the movie has no right child, replace it with the left child
+                return root.left;
+            }
+            root = min(root.right); // if the movie has two children, replace it with the minimum right child
+
+            root.right = removeMovieRecursion(root.right, root.title); // delete the minimum right child
+        }
+        return root;
+    }
+
+    private Movie min(Movie root){ // searches for the minimum leaf given a root
+        Movie min = root;
+        if(min.left != null) min = min(min.left);
+        return min;
+    }
+
+    public void inAlphabeticalOrder(){      // calls the recursive function bellow using the root
         inOrderMovie(root);
     }
-    public void inOrderMovie(Movie movie){
-        if(movie != null){
+
+    private void inOrderMovie(Movie movie){  // recursive function to print movie titles from
+        if(movie != null){                  // leftmost to rightmost node (alphabetical)
             inOrderMovie(movie.left);
             System.out.println(movie.title);
             inOrderMovie(movie.right);
