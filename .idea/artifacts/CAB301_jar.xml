@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="CAB301:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CAB301_jar</output-path>
+    <root id="archive" name="CAB301.jar">
+      <element id="module-output" name="CAB301" />
+    </root>
+  </artifact>
+</component>
