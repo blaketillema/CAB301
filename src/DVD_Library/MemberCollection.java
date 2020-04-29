@@ -5,17 +5,21 @@ import java.util.List;
 
 public class MemberCollection {
 
-    public Member[] members;
-    public List<Member> temp = new ArrayList<Member>();
+    public Member[] members = new Member[10];
 
     public void addMember(String name){
-        temp.add(new Member(name));
-        members = temp.toArray(new Member[temp.size()]);
+        int i = 0;
+        while(members[i] != null){
+            i++;
+        }
+        members[i] = new Member(name);
     }
 
     public void getMembers(){
-        for(int i = 0; i < members.length; i++){
+        int i = 0;
+        while(members[i] != null){
             System.out.println(members[i].name);
+            i++;
         }
     }
 
