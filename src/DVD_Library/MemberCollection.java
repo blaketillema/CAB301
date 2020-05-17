@@ -7,20 +7,24 @@ public class MemberCollection {
 
     public Member[] members = new Member[10];
 
-    public void addMember(String name){
+    public void addMember(String fn, String ln, String mobile){
         int i = 0;
         while(members[i] != null){
             i++;
         }
-        members[i] = new Member(name);
+        members[i] = new Member(fn, ln, mobile);
     }
 
-    public void getMembers(){
+    public String findMobile(String fn, String ln){
         int i = 0;
+        String mobile = "not found";
         while(members[i] != null){
-            System.out.println(members[i].name);
-            i++;
+            if(members[i].fn.equals(fn) && members[i].ln.equals(ln)){
+                mobile = members[i].mobile;
+                return mobile;
+            }
         }
+        return mobile;
     }
 
 }
