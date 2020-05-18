@@ -2,13 +2,11 @@ package DVD_Library;
 
 import java.util.Scanner;
 
-public class Staff {
+public class StaffMenu {
 
-    private MovieCollection mvc = new MovieCollection();
-    private MemberCollection mbc = new MemberCollection();
     private int option = -1;
 
-    public void staffMenu(){
+    public void staffMenu(MovieCollection mvc, MemberCollection mbc){
 
         while(option != 0){
 
@@ -22,39 +20,44 @@ public class Staff {
 
             switch(option){
                 case 1:
-                    addMovie();
+                    addMovie(mvc);
+                    System.out.println();
                     break;
                 case 2:
-                    removeMovie();
+                    removeMovie(mvc);
+                    System.out.println();
                     break;
                 case 3:
-                    addMember();
+                    addMember(mbc);
+                    System.out.println();
                     break;
                 case 4:
-                    findMemberMobi();
+                    findMemberMobi(mbc);
+                    System.out.println();
+                    break;
             }
         }
 
         System.out.println("Goodbye.");
     }
 
-    private void addMovie(){
+    private void addMovie(MovieCollection mvc){
         String addMvOp = "y";
         while(addMvOp.equals("y")){
             Scanner in = new Scanner(System.in);
             System.out.print("Please enter a title: ");
             String title = in.nextLine();
             System.out.print("Please enter a description: ");
-            String description = in.nextLine();
+            String info = in.nextLine();
             System.out.print("Please enter how many copies: ");
             int copies = in.nextInt();
-            mvc.addMovie(title);
+            mvc.addMovie(title, info, copies);
             System.out.print("Add another? (y/n): ");
             addMvOp = in.next();
         }
     }
 
-    private void removeMovie(){
+    private void removeMovie(MovieCollection mvc){
         String remMvOp = "y";
         while(remMvOp.equals("y")){
             Scanner in = new Scanner(System.in);
@@ -67,7 +70,7 @@ public class Staff {
         }
     }
 
-    private void addMember(){
+    private void addMember(MemberCollection mbc){
         String addMbOp = "y";
         while(addMbOp.equals("y")){
             Scanner in = new Scanner(System.in);
@@ -83,7 +86,7 @@ public class Staff {
         }
     }
 
-    private void findMemberMobi(){
+    private void findMemberMobi(MemberCollection mbc){
         String findMobOp = "y";
         while(findMobOp.equals("y")) {
             Scanner in = new Scanner(System.in);

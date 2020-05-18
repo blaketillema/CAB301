@@ -23,8 +23,36 @@ public class MemberCollection {
                 mobile = members[i].mobile;
                 return mobile;
             }
+            else{
+                i++;
+            }
         }
         return mobile;
     }
 
+    public boolean login(String un, int pw){
+        int i = 0;
+        while(members[i] != null){
+            if(members[i].un.equals(un) && members[i].pw == pw){
+                return true;
+            }
+            else{
+                i++;
+            }
+        }
+        return false;
+    }
+
+    public Member searchUn(String un){
+        int i = 0;
+        while(members[i] != null){
+            if(members[i].un.equals(un)){
+                return members[i];
+            }
+            else{
+                i++;
+            }
+        }
+        return null;
+    }
 }

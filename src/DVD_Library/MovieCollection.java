@@ -4,8 +4,8 @@ public class MovieCollection {
 
     public Movie root;
 
-    public void addMovie(String title){
-        Movie mv = new Movie(title);
+    public void addMovie(String title, String info, int copies){
+        Movie mv = new Movie(title, info, copies);
         if(root == null){
             root = mv;
         }
@@ -25,6 +25,21 @@ public class MovieCollection {
             root.right = addMovieRecursion(root.right, mv);
         }
         return root;
+    }
+
+    public Movie search(Movie root, String title){
+        if(root.title.equals(title)){
+            return root;
+        }
+        else{
+            if(root.title.compareTo(title) < 0){
+                search(root.left, title);
+            }
+            else{
+                search(root.right, title);
+            }
+        }
+        return null;
     }
 
     public void removeMovie(String title){
@@ -98,6 +113,43 @@ public class MovieCollection {
         return m;
     }
 
+    public void borrowMovie(Movie root, Movie m){
+        borrowMovieRecur(root, m);
+    }
+
+    private void borrowMovieRecur(Movie root, Movie m){
+        if(root.title.equals(m.title)){
+            root.timesBorrowed++;
+            root.copiesAvailable--;
+        }
+        else{
+            if(root.title.compareTo(m.title) < 0){
+                borrowMovieRecur(root.left, m);
+            }
+            else{
+                borrowMovieRecur(root.right, m);
+            }
+        }
+    }
+
+    public void returnMovie(Movie root, Movie m){
+        returnMovieRecur(root, m);
+    }
+
+    private void returnMovieRecur(Movie root, Movie m){
+        if(root.title.equals(m.title)){
+            root.copiesAvailable++;
+        }
+        else{
+            if(root.title.compareTo(m.title) < 0){
+                returnMovieRecur(root.left, m);
+            }
+            else{
+                returnMovieRecur(root.right, m);
+            }
+        }
+    }
+
     public void inAlphabeticalOrder(){      // calls the recursive function bellow using the root
         alphabeticalOrder(root);
     }
@@ -109,7 +161,10 @@ public class MovieCollection {
     private void alphabeticalOrder(Movie movie){  // recursive function to print movie titles from
         if(movie != null){                  // leftmost to rightmost node (alphabetical)
             alphabeticalOrder(movie.left);
-            System.out.println(movie.title);
+            System.out.println("Title: " + movie.title);
+            System.out.println("Description: " + movie.info);
+            System.out.println("Copies available: " + movie.copiesAvailable);
+            System.out.println();
             alphabeticalOrder(movie.right);
         }
     }
