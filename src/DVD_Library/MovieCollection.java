@@ -28,7 +28,10 @@ public class MovieCollection {
     }
 
     public Movie search(Movie root, String title){
-        if(root.title.equals(title)){
+        if(root == null){
+            return null;
+        }
+        else if(root.title.equals(title)){
             return root;
         }
         else{
@@ -39,7 +42,7 @@ public class MovieCollection {
                 search(root.right, title);
             }
         }
-        return null;
+        return root;
     }
 
     public void removeMovie(String title){
@@ -151,29 +154,35 @@ public class MovieCollection {
     }
 
     public void inAlphabeticalOrder(){      // calls the recursive function bellow using the root
-        alphabeticalOrder(root);
+        inOrderTraversal(root);
     }
 
-    public void inReverseAlphabeticalOrder(){
-        reverseAlphabeticalOrder(root);
+    public int length(Movie mv){
+        if(mv == null){
+            return 0;
+        }
+        else{
+            return(length(mv.left) + 1 + length(mv.right));
+        }
     }
 
-    private void alphabeticalOrder(Movie movie){  // recursive function to print movie titles from
+    private void inOrderTraversal(Movie movie){  // recursive function to print movie titles from
         if(movie != null){                  // leftmost to rightmost node (alphabetical)
-            alphabeticalOrder(movie.left);
+            inOrderTraversal(movie.left);
             System.out.println("Title: " + movie.title);
             System.out.println("Description: " + movie.info);
             System.out.println("Copies available: " + movie.copiesAvailable);
             System.out.println();
-            alphabeticalOrder(movie.right);
+            inOrderTraversal(movie.right);
         }
     }
 
-    private void reverseAlphabeticalOrder(Movie movie){
+    private void inReverseOrderTraversal(Movie movie){
         if(movie != null){
-            reverseAlphabeticalOrder(movie.right);
-            System.out.println(movie.title);
-            reverseAlphabeticalOrder(movie.left);
+            inReverseOrderTraversal(movie.right);
+            System.out.println("Title: " + movie.title);
+            System.out.println("Times borrowed: " + movie.timesBorrowed);
+            inReverseOrderTraversal(movie.left);
         }
     }
 }

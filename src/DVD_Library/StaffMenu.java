@@ -4,41 +4,35 @@ import java.util.Scanner;
 
 public class StaffMenu {
 
-    private int option = -1;
 
     public void staffMenu(MovieCollection mvc, MemberCollection mbc){
 
+        int option = -1;
+
         while(option != 0){
 
-            System.out.println("1. Add a movie");
-            System.out.println("2. Remove a movie");
-            System.out.println("3. Register a member");
-            System.out.println("4. Find a member's mobile number");
-            System.out.print("Enter a number [1-4], or enter 0 to exit: ");
+            System.out.println("1. Add a movie\n2. Remove a movie\n3. Register a member\n4. Find a member's phone number\n");
+            System.out.print("Please make a selection [1-4, or 0 to exit]: ");
             Scanner in = new Scanner(System.in);
             option = in.nextInt();
 
             switch(option){
                 case 1:
                     addMovie(mvc);
-                    System.out.println();
                     break;
                 case 2:
                     removeMovie(mvc);
-                    System.out.println();
                     break;
                 case 3:
                     addMember(mbc);
-                    System.out.println();
                     break;
                 case 4:
                     findMemberMobi(mbc);
-                    System.out.println();
                     break;
             }
         }
 
-        System.out.println("Goodbye.");
+        System.out.println();
     }
 
     private void addMovie(MovieCollection mvc){
@@ -55,6 +49,7 @@ public class StaffMenu {
             System.out.print("Add another? (y/n): ");
             addMvOp = in.next();
         }
+        System.out.println();
     }
 
     private void removeMovie(MovieCollection mvc){
@@ -68,6 +63,7 @@ public class StaffMenu {
             System.out.print("Remove another movie? (y/n): ");
             remMvOp = in.nextLine();
         }
+        System.out.println();
     }
 
     private void addMember(MemberCollection mbc){
@@ -84,6 +80,7 @@ public class StaffMenu {
             System.out.print("Add another member? (y/n): ");
             addMbOp = in.nextLine();
         }
+        System.out.println();
     }
 
     private void findMemberMobi(MemberCollection mbc){
@@ -98,5 +95,6 @@ public class StaffMenu {
             System.out.print("Search again? (y/n): ");
             findMobOp = in.nextLine();
         }
+        System.out.println();
     }
 }

@@ -13,29 +13,22 @@ public class Main {
         MemberCollection mbc = new MemberCollection();
 
         while(menuOp != 0){
+
             Scanner in = new Scanner(System.in);
-            System.out.println("1. Staff Menu");
-            System.out.println("2. Member Menu");
-            System.out.println("0. Exit");
-            System.out.println();
+            System.out.println("1. Staff Menu\n2. Member Menu\n0. Exit\n");
             System.out.print("Please make a selection [1-2, or 0 to exit]: ");
             menuOp = in.nextInt();
+            System.out.println();
             
             switch(menuOp){
                 case 1:
                     staffMenu.staffMenu(mvc, mbc);
-                    System.out.println();
                     break;
                 case 2:
                     memberMenu.memberMenu(mvc, mbc);
-                    System.out.println();
                     break;
-                case 0:
-                    System.out.println("Goodbye.");
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + menuOp + '\n');
             }
         }
+        System.out.println("Goodbye. ");
     }
 }

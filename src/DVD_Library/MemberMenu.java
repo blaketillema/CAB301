@@ -11,15 +11,11 @@ public class MemberMenu {
         if(mb != null){
             Scanner in = new Scanner(System.in);
             int menuOp = -1;
-
-
             while(menuOp != 0){
-                System.out.println("1. Display all movies");
-                System.out.println("2. Borrow a movie");
-                System.out.println("0. Exit");
-                System.out.println();
-                System.out.print("Please make a selection [1-2, or 0 to exit]: ");
+                System.out.println("1. Display all movies\n2. Borrow a movie\n3. Return a movie\n4. List current borrowed movies\n5. Top 10 most popular\n0. Exit\n");
+                System.out.print("Please make a selection [1-5, or 0 to exit]: ");
                 menuOp = in.nextInt();
+                System.out.println();
                 switch(menuOp){
                     case 1:
                         allMovies(mvc);
@@ -30,6 +26,13 @@ public class MemberMenu {
                     case 3:
                         returnMv(mb, mvc);
                         break;
+                    case 4:
+                        currentBorrowedMv(mb);
+                        break;
+                    case 5:
+                        //mvc.topTen(mvc.root);
+                    case 9:
+                        testSetup(mbc, mvc);
                 }
             }
         }
@@ -49,6 +52,7 @@ public class MemberMenu {
                 System.out.print("Please enter passcode: ");
                 int pw = in.nextInt();
                 if(mbc.login(un, pw)){
+                    System.out.println();
                     return mb;
                 }
                 else{
@@ -71,6 +75,23 @@ public class MemberMenu {
         return null;
     }
 
+    private void testSetup(MemberCollection mbc, MovieCollection mvc){
+        mbc.addMember("grant", "macdonald", "18");
+        String[] movies = {"eighteen", "naked", "cowboys", "in", "the", "showers", "at", "ram", "ranch", "big", "chickens", "wanting", "to", "cluck"};
+        for(int i = 0; i < movies.length; i++){
+            mvc.addMovie(movies[i], "info", 50);
+        }
+        int idk = 13;
+        while(idk > 0){
+            for(int i = 0; i < idk; i++){
+                Movie mv = mvc.search(mvc.root, movies[i]);
+                mvc.borrowMovie(mvc.root, mv);
+                mvc.returnMovie(mvc.root, mv);
+            }
+            idk--;
+        }
+    }
+
     private void allMovies(MovieCollection mvc){
         mvc.inAlphabeticalOrder();
     }
@@ -78,14 +99,22 @@ public class MemberMenu {
     private void borrow(Member mb, MovieCollection mvc){
         Scanner in = new Scanner(System.in);
         System.out.print("Please enter a movie to borrow: ");
-        Movie toBorrow = mvc.search(mvc.root, in.nextLine());
+        String title = in.nextLine();
+        Movie toBorrow = mvc.search(mvc.root, title);
+        Movie memberCopy = mvc.search(mb.mc.root, title);
         if(toBorrow == null){
             System.out.println("Movie not found");
         }
         else{
-            mvc.borrowMovie(mvc.root, toBorrow);
-            mb.mc.addMovie(toBorrow.title, toBorrow.info, toBorrow.copiesAvailable);
+            if(memberCopy == null){
+                mvc.borrowMovie(mvc.root, toBorrow);
+                mb.mc.addMovie(toBorrow.title, toBorrow.info, 1);
+            }
+            else{
+                System.out.println("You already have a copy");
+            }
         }
+        System.out.println();
     }
 
     private void returnMv(Member mb, MovieCollection mvc){
@@ -97,7 +126,17 @@ public class MemberMenu {
         }
         else{
             mvc.returnMovie(mvc.root, toReturn);
-            mb.mc.removeMovie(toReturn.title);
+            if(toReturn.copiesAvailable == 1){
+                mb.mc.removeMovie(toReturn.title);
+            }
+            else{
+                toReturn.copiesAvailable--;
+            }
         }
+        System.out.println();
+    }
+
+    private void currentBorrowedMv(Member mb){
+        mb.mc.inAlphabeticalOrder();
     }
 }
