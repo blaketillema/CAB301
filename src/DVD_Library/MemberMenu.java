@@ -30,9 +30,7 @@ public class MemberMenu {
                         currentBorrowedMv(mb);
                         break;
                     case 5:
-                        //mvc.topTen(mvc.root);
-                    case 9:
-                        testSetup(mbc, mvc);
+                        mvc.topTen();
                 }
             }
         }
@@ -73,23 +71,6 @@ public class MemberMenu {
             }
         }
         return null;
-    }
-
-    private void testSetup(MemberCollection mbc, MovieCollection mvc){
-        mbc.addMember("grant", "macdonald", "18");
-        String[] movies = {"eighteen", "naked", "cowboys", "in", "the", "showers", "at", "ram", "ranch", "big", "chickens", "wanting", "to", "cluck"};
-        for(int i = 0; i < movies.length; i++){
-            mvc.addMovie(movies[i], "info", 50);
-        }
-        int idk = 13;
-        while(idk > 0){
-            for(int i = 0; i < idk; i++){
-                Movie mv = mvc.search(mvc.root, movies[i]);
-                mvc.borrowMovie(mvc.root, mv);
-                mvc.returnMovie(mvc.root, mv);
-            }
-            idk--;
-        }
     }
 
     private void allMovies(MovieCollection mvc){

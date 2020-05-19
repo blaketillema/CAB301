@@ -166,6 +166,28 @@ public class MovieCollection {
         }
     }
 
+    public void topTen(){
+        int len = length(root);
+        Movie[] movies = new Movie[len];
+        movies = toArray(root, movies);
+        for(int i = 0; i < len; i++){
+            System.out.println(movies[i].title);
+        }
+    }
+
+    private Movie[] toArray(Movie movie, Movie[] movies){
+        if(movie != null){
+            toArray(movie.left, movies);
+            int i = 0;
+            while(i < movies.length && movies[i] != null){
+                i++;
+            }
+            movies[i] = movie;
+            toArray(movie.right, movies);
+        }
+        return movies;
+    }
+
     private void inOrderTraversal(Movie movie){  // recursive function to print movie titles from
         if(movie != null){                  // leftmost to rightmost node (alphabetical)
             inOrderTraversal(movie.left);

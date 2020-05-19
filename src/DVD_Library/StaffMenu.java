@@ -29,10 +29,29 @@ public class StaffMenu {
                 case 4:
                     findMemberMobi(mbc);
                     break;
+                case 9:
+                    testSetup(mbc, mvc);
             }
         }
 
         System.out.println();
+    }
+
+    private void testSetup(MemberCollection mbc, MovieCollection mvc){
+        mbc.addMember("grant", "macdonald", "18");
+        String[] movies = {"eighteen", "naked", "cowboys", "in", "the", "showers", "at", "ram", "ranch", "big", "chickens", "wanting", "to", "cluck"};
+        for(int i = 0; i < movies.length; i++){
+            mvc.addMovie(movies[i], "info", 50);
+        }
+        int idk = 13;
+        while(idk > 0){
+            for(int i = 0; i < idk; i++){
+                Movie mv = mvc.search(mvc.root, movies[i]);
+                mvc.borrowMovie(mvc.root, mv);
+                mvc.returnMovie(mvc.root, mv);
+            }
+            idk--;
+        }
     }
 
     private void addMovie(MovieCollection mvc){
