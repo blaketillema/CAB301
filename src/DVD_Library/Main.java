@@ -15,11 +15,10 @@ public class Main {
         while(menuOp != 0){
 
             Scanner in = new Scanner(System.in);
-            System.out.println("1. Staff Menu\n2. Member Menu\n0. Exit\n");
-            System.out.print("Please make a selection [1-2, or 0 to exit]: ");
+            System.out.println("\n1. Staff Menu\n2. Member Menu\n0. Exit");
+            System.out.print("\nPlease make a selection [1-2, or 0 to exit]: ");
             menuOp = in.nextInt();
-            System.out.println();
-            
+
             switch(menuOp){
                 case 1:
                     staffMenu.staffMenu(mvc, mbc);

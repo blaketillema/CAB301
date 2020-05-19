@@ -12,10 +12,9 @@ public class MemberMenu {
             Scanner in = new Scanner(System.in);
             int menuOp = -1;
             while(menuOp != 0){
-                System.out.println("1. Display all movies\n2. Borrow a movie\n3. Return a movie\n4. List current borrowed movies\n5. Top 10 most popular\n0. Exit\n");
-                System.out.print("Please make a selection [1-5, or 0 to exit]: ");
+                System.out.println("\n1. Display all movies\n2. Borrow a movie\n3. Return a movie\n4. List current borrowed movies\n5. Top 10 most popular\n0. Exit");
+                System.out.print("\nPlease make a selection [1-5, or 0 to exit]: ");
                 menuOp = in.nextInt();
-                System.out.println();
                 switch(menuOp){
                     case 1:
                         allMovies(mvc);
@@ -31,6 +30,7 @@ public class MemberMenu {
                         break;
                     case 5:
                         mvc.topTen();
+                        break;
                 }
             }
         }
@@ -50,7 +50,6 @@ public class MemberMenu {
                 System.out.print("Please enter passcode: ");
                 int pw = in.nextInt();
                 if(mbc.login(un, pw)){
-                    System.out.println();
                     return mb;
                 }
                 else{
@@ -95,7 +94,6 @@ public class MemberMenu {
                 System.out.println("You already have a copy");
             }
         }
-        System.out.println();
     }
 
     private void returnMv(Member mb, MovieCollection mvc){
@@ -114,7 +112,6 @@ public class MemberMenu {
                 toReturn.copiesAvailable--;
             }
         }
-        System.out.println();
     }
 
     private void currentBorrowedMv(Member mb){

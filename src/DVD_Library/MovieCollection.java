@@ -163,8 +163,8 @@ public class MovieCollection {
         Movie[] movies = new Movie[len];
         movies = toArray(root, movies);
         movies = heapsort(movies);
-        Movie[] topTen = new Movie[10];
-        for(int i = 0; i < 10; i++){
+        Movie[] topTen = new Movie[movies.length];
+        for(int i = 0; i < movies.length; i++){
             topTen[i] = movies[movies.length - i - 1];
             System.out.println(topTen[i].title + " - " + topTen[i].timesBorrowed);
         }
@@ -223,11 +223,10 @@ public class MovieCollection {
     private void inOrderTraversal(Movie movie){  // recursive function to print movie titles from
         if(movie != null){                  // leftmost to rightmost node (alphabetical)
             inOrderTraversal(movie.left);
-            System.out.println("Title: " + movie.title);
+            System.out.println("\nTitle: " + movie.title);
             System.out.println("Description: " + movie.info);
             System.out.println("Copies available: " + movie.copiesAvailable);
             System.out.println("Times borrowed: " + movie.timesBorrowed);
-            System.out.println();
             inOrderTraversal(movie.right);
         }
     }

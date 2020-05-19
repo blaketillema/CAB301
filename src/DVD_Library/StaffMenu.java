@@ -7,32 +7,73 @@ public class StaffMenu {
 
     public void staffMenu(MovieCollection mvc, MemberCollection mbc){
 
-        int option = -1;
+        if(login()){
+            int option = -1;
 
-        while(option != 0){
+            while (option != 0) {
 
-            System.out.println("1. Add a movie\n2. Remove a movie\n3. Register a member\n4. Find a member's phone number\n");
-            System.out.print("Please make a selection [1-4, or 0 to exit]: ");
-            Scanner in = new Scanner(System.in);
-            option = in.nextInt();
+                System.out.println("\n1. Add a movie\n2. Remove a movie\n3. Register a member\n4. Find a member's phone number");
+                System.out.print("\nPlease make a selection [1-4, or 0 to exit]: ");
+                Scanner in = new Scanner(System.in);
+                option = in.nextInt();
 
-            switch(option){
-                case 1:
-                    addMovie(mvc);
-                    break;
-                case 2:
-                    removeMovie(mvc);
-                    break;
-                case 3:
-                    addMember(mbc);
-                    break;
-                case 4:
-                    findMemberMobi(mbc);
-                    break;
+                switch (option) {
+                    case 1:
+                        addMovie(mvc);
+                        break;
+                    case 2:
+                        removeMovie(mvc);
+                        break;
+                    case 3:
+                        addMember(mbc);
+                        break;
+                    case 4:
+                        findMemberMobi(mbc);
+                        break;
+                    case 9:
+                        testSetup(mvc, mbc);
+                        break;
+                }
             }
         }
+    }
 
-        System.out.println();
+    private boolean login(){
+        boolean loggedIn = false;
+        while(!loggedIn){
+            Scanner in = new Scanner(System.in);
+            System.out.print("Please enter username (or 0 to exit): ");
+            String un = in.nextLine();
+            if(un.equals("0")){
+                break;
+            }
+            System.out.print("Please enter password: ");
+            String pw = in.nextLine();
+            if(un.equals("staff") && pw.equals("today123")){
+                loggedIn = true;
+            }
+            else{
+                System.out.println("Username or password incorrect. Try again.");
+            }
+        }
+        return loggedIn;
+    }
+
+    private void testSetup(MovieCollection mvc, MemberCollection mbc){
+        String[] movies = {"the", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "incy", "wincy", "spider", "climbed", "up", "water", "spout"};
+        for(String movie : movies){
+            mvc.addMovie(movie, movie, 10);
+        }
+        for(int i = 0; i < movies.length; i++){
+            Movie mv = mvc.search(mvc.root, movies[i]);
+            int j = i;
+            while(j < movies.length){
+                mvc.borrowMovie(mvc.root, mv);
+                mvc.returnMovie(mvc.root, mv);
+                j++;
+            }
+        }
+        mbc.addMember("qwe", "po", "123");
     }
 
     private void addMovie(MovieCollection mvc){
@@ -49,7 +90,6 @@ public class StaffMenu {
             System.out.print("Add another? (y/n): ");
             addMvOp = in.next();
         }
-        System.out.println();
     }
 
     private void removeMovie(MovieCollection mvc){
@@ -57,13 +97,12 @@ public class StaffMenu {
         while(remMvOp.equals("y")){
             Scanner in = new Scanner(System.in);
             mvc.inAlphabeticalOrder();
-            System.out.print("Please enter a title from above: ");
+            System.out.print("\nPlease enter a title from above: ");
             String title = in.nextLine();
             mvc.removeMovie(title);
             System.out.print("Remove another movie? (y/n): ");
             remMvOp = in.nextLine();
         }
-        System.out.println();
     }
 
     private void addMember(MemberCollection mbc){
@@ -80,7 +119,6 @@ public class StaffMenu {
             System.out.print("Add another member? (y/n): ");
             addMbOp = in.nextLine();
         }
-        System.out.println();
     }
 
     private void findMemberMobi(MemberCollection mbc){
@@ -95,6 +133,5 @@ public class StaffMenu {
             System.out.print("Search again? (y/n): ");
             findMobOp = in.nextLine();
         }
-        System.out.println();
     }
 }
