@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String args[]){
-
+        // initialise program collections
         int menuOp = -1;
         StaffMenu staffMenu = new StaffMenu();
         MemberMenu memberMenu = new MemberMenu();
@@ -14,7 +14,8 @@ public class Main {
 
         while(menuOp != 0){
 
-            Scanner in = new Scanner(System.in);
+            Scanner in = new Scanner(System.in); // main menu
+            System.out.print("\n   Main Menu");
             System.out.println("\n1. Staff Menu\n2. Member Menu\n0. Exit");
             System.out.print("\nPlease make a selection [1-2, or 0 to exit]: ");
             menuOp = in.nextInt();

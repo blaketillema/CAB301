@@ -2,6 +2,7 @@ package DVD_Library;
 
 public class Movie {
 
+    // stuff
     public Movie left, right;
     public String title;
     public String info;

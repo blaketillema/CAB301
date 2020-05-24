@@ -1,17 +1,19 @@
 package DVD_Library;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class StaffMenu {
 
 
     public void staffMenu(MovieCollection mvc, MemberCollection mbc){
-
+        // menu will only run if the staff are logged in
         if(login()){
             int option = -1;
 
             while (option != 0) {
 
+                System.out.print("\n   Staff Menu");
                 System.out.println("\n1. Add a movie\n2. Remove a movie\n3. Register a member\n4. Find a member's phone number");
                 System.out.print("\nPlease make a selection [1-4, or 0 to exit]: ");
                 Scanner in = new Scanner(System.in);
@@ -50,6 +52,7 @@ public class StaffMenu {
             System.out.print("Please enter password: ");
             String pw = in.nextLine();
             if(un.equals("staff") && pw.equals("today123")){
+                // returns true if the username and password match the predefined ones
                 loggedIn = true;
             }
             else{
@@ -60,19 +63,21 @@ public class StaffMenu {
     }
 
     private void testSetup(MovieCollection mvc, MemberCollection mbc){
+        // adds a number of movies a random amount of times for testing top ten
         String[] movies = {"the", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "incy", "wincy", "spider", "climbed", "up", "water", "spout"};
         for(String movie : movies){
             mvc.addMovie(movie, movie, 10);
         }
-        for(int i = 0; i < movies.length; i++){
-            Movie mv = mvc.search(mvc.root, movies[i]);
-            int j = i;
-            while(j < movies.length){
+        for (String movie : movies) {
+            Movie mv = mvc.search(mvc.root, movie);
+            int j = 0;
+            while (j < Math.floor(10000 * Math.random())) {
                 mvc.borrowMovie(mvc.root, mv);
                 mvc.returnMovie(mvc.root, mv);
                 j++;
             }
         }
+        // also adds a member with these attributes
         mbc.addMember("qwe", "po", "123");
     }
 

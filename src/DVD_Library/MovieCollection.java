@@ -4,12 +4,14 @@ public class MovieCollection {
 
     public Movie root;
 
+    // adds a movie to the collection
     public void addMovie(String title, String info, int copies){
-        Movie mv = new Movie(title, info, copies);
+        Movie mv = new Movie(title, info, copies); // constructor
         if(root == null){
-            root = mv;
+            root = mv; //if there isn't a root, the new movie becomes the root
         }
         else{
+            // there's a root, decide if it should go left or right
             root = addMovieRecursion(root, mv);
         }
     }
@@ -19,9 +21,11 @@ public class MovieCollection {
             return mv; // add movie
         }
         if(mv.title.compareTo(root.title) < 0){
+            // new title comes before the current node's title, go left
             root.left = addMovieRecursion(root.left, mv);
         }
         else if(mv.title.compareTo(root.title) > 0){
+            // new title comes after the current node's title, go right
             root.right = addMovieRecursion(root.right, mv);
         }
         return root;
@@ -29,14 +33,18 @@ public class MovieCollection {
 
     public Movie search(Movie root, String title){
         if(root == null || root.title.compareTo(title) == 0){
+            // if the movie is or isn't found, return null or the movie
             return root;
         }
         if(root.title.compareTo(title) > 0){
+            // the search title comes before the current node's title, go left
             return search(root.left, title);
         }
+        // the search title comes after the current node's title, go right
         return search(root.right, title);
     }
 
+    // calls the removal recursion
     public void removeMovie(String title){
         root = removeMovieRecur(root, title);
     }
@@ -108,38 +116,48 @@ public class MovieCollection {
         return m;
     }
 
+    // calls the borrowing recursion
     public void borrowMovie(Movie root, Movie m){
         borrowMovieRecur(root, m);
     }
 
+
     private void borrowMovieRecur(Movie root, Movie m){
         if(root.title.equals(m.title)){
+            // when the movie is found, increment the times borrowed
+            // and decrement the copies available
             root.timesBorrowed++;
             root.copiesAvailable--;
         }
         else{
             if(m.title.compareTo(root.title) < 0){
+                // if the title to borrow comes before the root, go left
                 borrowMovieRecur(root.left, m);
             }
             else{
+                // if the title to borrow comes after the root, go right
                 borrowMovieRecur(root.right, m);
             }
         }
     }
 
+    //calls the return recursion
     public void returnMovie(Movie root, Movie m){
         returnMovieRecur(root, m);
     }
 
     private void returnMovieRecur(Movie root, Movie m){
         if(root.title.equals(m.title)){
+            // when the movie is found, increment copies available
             root.copiesAvailable++;
         }
         else{
             if(m.title.compareTo(root.title) < 0){
+                // if the title to return comes before the root, go left
                 returnMovieRecur(root.left, m);
             }
             else{
+                // if the title to return comes after the root, go right
                 returnMovieRecur(root.right, m);
             }
         }
@@ -154,19 +172,29 @@ public class MovieCollection {
             return 0;
         }
         else{
+            // returns length of bst by traversing each node and returning +1
             return(length(mv.left) + 1 + length(mv.right));
         }
     }
 
     public void topTen(){
+        // get the length of the bst
         int len = length(root);
+        // initialise an array of Movies the length of the bst
         Movie[] movies = new Movie[len];
+        // fill the array with the nodes in the bst
         movies = toArray(root, movies);
+        // sort the array low to high by times borrowed
         movies = heapsort(movies);
-        Movie[] topTen = new Movie[movies.length];
-        for(int i = 0; i < movies.length; i++){
-            topTen[i] = movies[movies.length - i - 1];
-            System.out.println(topTen[i].title + " - " + topTen[i].timesBorrowed);
+        int i = 0;
+        int end = Math.min(len, 10);
+        while(i < end){
+            // print the last 10 entries of the array
+            System.out.println(
+                    movies[movies.length - 1 - i].title + " - " +
+                    movies[movies.length - 1 - i].timesBorrowed
+            );
+            i++;
         }
     }
 
